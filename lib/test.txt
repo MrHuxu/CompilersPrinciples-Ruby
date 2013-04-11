@@ -2,7 +2,7 @@ int num_1;
 int num_2;
 char char_1;
 int num_4;
-double num_6;
+real num_6;
 
 int _cal(int a, int b){
 	int c := a + b;

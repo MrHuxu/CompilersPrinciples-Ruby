@@ -29,7 +29,8 @@ def LexAnalyzer(fileName)
     end
   }
 
-  #将get_line中的字符串根据分割成小字符串构成的数组
+  #将get_line中的字符串根据 空格分割成小字符串构成的数组
+  #line_split是一个二维数组，第一维代表行，一个元素所在二维在line_split中的下角标+1就是行数
   line_split = []
   0.upto(get_line.length - 1) { |i| 
     line_split[i] = get_line[i].split(" ")
@@ -75,14 +76,14 @@ def LexAnalyzer(fileName)
       $syn[i] = 9
     when"char"
       $syn[i] = 10
+    when"real"
+      $syn[i] = 38
+    when"gets"
+      $syn[i] = 40
+    when"puts"
+      $syn[i] = 42
     when "+", "*", "/", "=", "(", ")", ";", ","
       $syn[i] = $token[i][0] - 20
-    when "-"
-      if $token[i][1] == nil
-        $syn[i] = $token[i][0] - 20
-      else
-        $syn[i] = 26
-      end
     when "[", "]"
       $syn[i] = $token[i][0] - 60
     when "{", "}"
@@ -100,14 +101,22 @@ def LexAnalyzer(fileName)
     when'"'
       $syn[i] = 29
     else
-      if $token[i][0].chr == '_'
+      if $token[i][0].chr >= '0' && $token[i][0].chr <= '9'
+        $syn[i] = 18
+      elsif $token[i][0].chr == '_'
         $syn[i] = 17
       elsif $token[i][0].chr == '#'
         $syn[i] = 35
+      elsif $token[i][0].chr == '-'
+        if $token[i][1] == nil
+          $syn[i] = $token[i][0] - 20
+        else
+          $syn[i] = 26
+        end
       elsif $syn[i - 1] == 29
         $syn[i] = 19
       else
-        $syn[i] = 18
+        $syn[i] = 16
       end
     end
   }
