@@ -3,6 +3,8 @@
 load "declareID.rb"
 
 def LexAnalyzer(fileName)
+  keyword = %w{main if then else elsif do while return break int char := <= nil >= != nil nil nil nil 
+  ( ) * + , - nil % nil " < [ > ] real # nil / nil ; gets = puts { }}   #所有关键字的集合
   
   #将文件内容逐行读入数组，get_line每行为字符串
   get_line = []
@@ -53,77 +55,30 @@ def LexAnalyzer(fileName)
   
   #逐个扫描$token[]中的字符串
   0.upto($token.length - 1) { |i|
-    case $token[i]
-    when "main"
-      $syn[i] = 0
-    when"if"
-      $syn[i] = 1
-    when"then"
-      $syn[i] = 2
-    when"else"
-      $syn[i] = 3
-    when"elsif"
-      $syn[i] = 4
-    when"do"
-      $syn[i] = 5
-    when"while"
-      $syn[i] = 6
-    when"return"
-      $syn[i] = 7
-    when"break"
-      $syn[i] = 8
-    when"int"
-      $syn[i] = 9
-    when"char"
-      $syn[i] = 10
-    when"real"
-      $syn[i] = 38
-    when"gets"
-      $syn[i] = 40
-    when"puts"
-      $syn[i] = 42
-    when "+", "*", "/", "=", "(", ")", ";", ","
-      $syn[i] = $token[i][0] - 20
-    when "[", "]"
-      $syn[i] = $token[i][0] - 60
-    when "{", "}"
-      $syn[i] = $token[i][0] - 80
-    when "%"
-      $syn[i] = $token[i][0] - 10
-    when ":="
-      $syn[i] = 14
-    when "!="
-      $syn[i] = 15
-    when"<=",">="
-      $syn[i] = $token[i][0] - 20
-    when"<", ">"
-      $syn[i] = $token[i][0] - 30
-    when'"'
-      $syn[i] = 29
-    else
-      if $token[i][0].chr >= '0' && $token[i][0].chr <= '9'
-        $syn[i] = 18
-      elsif $token[i][0].chr == '_'
-        $syn[i] = 17
-      elsif $token[i][0].chr == '#'
-        $syn[i] = 35
-      elsif $token[i][0].chr == '-'
-        if $token[i][1] == nil
-          $syn[i] = $token[i][0] - 20
-        else
-          $syn[i] = 26
-        end
-      elsif $syn[i - 1] == 29
-        $syn[i] = 19
+      if keyword.include?($token[i])
+        $syn[i] = keyword.find_index($token[i])
       else
-        $syn[i] = 16
+        if $token[i][0].chr >= '0' && $token[i][0].chr <= '9'
+          $syn[i] = 18
+        elsif $token[i][0].chr == '_'
+          $syn[i] = 17
+        elsif $token[i][0].chr == '#'
+          $syn[i] = 35
+        elsif $token[i][0].chr == '-'
+          if $token[i][1] == nil
+            $syn[i] = $token[i][0] - 20
+          else
+            $syn[i] = 26
+          end
+        elsif $syn[i - 1] == 29
+          $syn[i] = 19
+        else
+          $syn[i] = 16
+        end
       end
-    end
   }
   
   0.upto($token.length - 1) { |i|  
-    print $getNumofLine[i], "    "
-    print $syn[i], "    "
-    puts $token[i]
+    print $getNumofLine[i], "    "  , $syn[i], "    "  ,  $token[i] , "\n" #打印行号，种别码，属性值
   }
 end
