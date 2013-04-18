@@ -3,7 +3,7 @@ int b
 int c
 a = 12
 a = 2.4
-c = gets
+#c = gets #haha
 a = a * (a + c)
 b = 'Ruby'
 
@@ -14,5 +14,5 @@ end
 int d
 d = 0
 while d < 10 :
-    puts d
+    puts d          #This is a test
 end

@@ -1,9 +1,8 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
 load "declareID.rb"
 
 def LexAnalyzer()
   keyword = %w{int real string if while end else gets puts + - * / = != == > < ( ) :}   #所有关键字的集合
+  terminal = %w{i r s f e d l g p + - * / & ! = > < ( ) : nil v m n o #}    #所有终结符的集合
   
   #将文件内容逐行读入数组，get_line每行为字符串
   get_line = []
@@ -64,10 +63,12 @@ def LexAnalyzer()
       elsif /^'\w+'$/ =~ $token[i]
         $syn[i] = 25
       elsif $token[i][0].chr == '#'
-        $syn[i] = 35
+        $syn[i] = 26
       else 
         $syn[i] = 22
       end
     end
+    #根据$syn[i]的内容，将相应终结符存入$sentence
+    $sentence[$sentence.length] = terminal[$syn[i]]
   }
 end

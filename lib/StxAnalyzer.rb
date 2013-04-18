@@ -1,12 +1,14 @@
 load "declareID.rb"
 
+#根据CFG.txt制作语法分析表
 def Make_Stx_list()
-  $Stx_list = [] 
+  #初始化$Stx_list数组，建立散列表
   0.upto(500) { |i|  $Stx_list[i] = {
       'action' => [],
       'goto' => []
     }  
   }
+  #打开并将CFG.txt内容分别存入相应数组
   file = File.open("CFG.txt")
   $a = 0
   file.each_line {|line|
@@ -22,7 +24,8 @@ def Make_Stx_list()
     end
   }
 
-  $V[$V.length-1] = ($V[$V.length-1][0]).chr
+  #这两行不知所云的代码是为了去掉gets方法在最后一个字符上添加的\n后缀，切记！
+  $V[$V.length-1] = ($V[$V.length-1][0]).chr     
   $T[$T.length-1] = ($T[$T.length-1][0]).chr
   $X = $V[1..($V.length-1)] + $T[0..($T.length-2)]
 
@@ -45,16 +48,12 @@ def Make_Stx_list()
     $first[i].uniq!
   }
 
-  $pro_l = []
   0.upto(300) { |i|  
     $pro_l[i] = []
     0.upto(300) { |i2|  
       $pro_l[i][i2] = []
     }
   }
-  $pla = 0
-  $numofpro = []
-  $num = 1
 
   def closure()
     tmp_line = []
@@ -170,13 +169,13 @@ def Make_Stx_list()
         end
       }
       $numofpro[$pla] = $num
-      $num = 0
-    end
-  end
+      $num = 0                                             #。。。。。中间这段代码，就不装B写注释了。。。。。。。。
+    end   
+  end                                                      #。。。就是书上的三个函数，看的懂就看。。。。。。。。。
 
-  $pro_l[0][0] = %w{S' -> ` S | $}
-  closure()
-  0.upto($line.length - 1) { |i2|  
+  $pro_l[0][0] = %w{S' -> ` S | $}                         #。。。注释我也不知道从何写起，反正现在我已经犯恶心了。。。
+  closure()                                            
+  0.upto($line.length - 1) { |i2|                         #。。。。。好像后面语义分析才是大头，我去洗个脸清醒一下大脑先。。。。
     if $line[i2][2] != '`'
       $line[i2].insert(2, '`')
     end
@@ -214,6 +213,7 @@ def Make_Stx_list()
     end 
   }
 
+  #将$line中的 ` 去掉，以用于后面归约
   0.upto($line.length-1) { |i|  $line[i].delete_at(2)}
 end
 
@@ -221,6 +221,7 @@ def StxAnalyzer(m,n,o)
   $ex = []+ m
   $stack[0] = 0
   $ip = 0
+  #详见编译原理红龙书144页LR语法分析器移动和归约方法
   while $ip < $ex.length 
     if $Stx_list[$stack[$stack.length-1]]['action'][$T.find_index($ex[$ip])] == nil
       if o != nil
