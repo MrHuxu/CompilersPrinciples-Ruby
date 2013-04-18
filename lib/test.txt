@@ -1,34 +1,17 @@
-int num_1;
-int num_2;
-char char_1;
-int num_4;
-real num_6;
+int a
+int b
+int c
+a = 12
+a = 2.4
+c = gets
+b = 'Ruby'
 
-int _cal(int a, int b){
-	int c := a + b;
-	return c;  #This is note_1
-}
+if c > a :
+    puts c
+end
 
-int main(){
-	num_1 := 2;
-	num_2 := 40;
-	num_1 := num_2 - num_1;
-	num_6 := -2.567;
-	char_1 := "a";  #This is note_2
-	num_5 = 9;
-	num_4 = gets;
-	puts num_4;
-
-	if(num_1 > num_2) then{
-		char d = "study";
-	}
-
-	while(num_1 < num_2) do{
-		num_1 := num_1 + 2;
-		num_2 := num_2 + 1;
-
-		if(_cal(num_1, num_2) >= 100) then{
-			break;
-		}
-	}
-}
+int d
+d = 0
+while d < 10 :
+    puts d
+end

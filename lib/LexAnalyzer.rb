@@ -2,13 +2,12 @@
 # and open the template in the editor.
 load "declareID.rb"
 
-def LexAnalyzer(fileName)
-  keyword = %w{main if then else elsif do while return break int char := <= nil >= != nil nil nil nil 
-  ( ) * + , - nil % nil " < [ > ] real # nil / nil ; gets = puts { }}   #所有关键字的集合
+def LexAnalyzer()
+  keyword = %w{int real string if while end else gets puts + - * / = != == > < ( ) :}   #所有关键字的集合
   
   #将文件内容逐行读入数组，get_line每行为字符串
   get_line = []
-  file = File.open(fileName) 
+  file = File.open("test.txt") 
   file.each  { |line|
     get_line[get_line.length] = line
   }
@@ -18,10 +17,10 @@ def LexAnalyzer(fileName)
     j = 0
     while j <= get_line[i].length - 1
       case get_line[i][j].chr
-      when';',',',')','{','}'
+      when')'
         get_line[i].insert(j, " ")
         j = j + 2
-      when'(','"'
+      when'('
         get_line[i].insert(j + 1, " ")
         get_line[i].insert(j, " ")
         j = j + 2
@@ -55,27 +54,21 @@ def LexAnalyzer(fileName)
   
   #逐个扫描$token[]中的字符串
   0.upto($token.length - 1) { |i|
-      if keyword.include?($token[i])
-        $syn[i] = keyword.find_index($token[i])
-      else
-        if $token[i][0].chr >= '0' && $token[i][0].chr <= '9'
-          $syn[i] = 18
-        elsif $token[i][0].chr == '_'
-          $syn[i] = 17
-        elsif $token[i][0].chr == '#'
-          $syn[i] = 35
-        elsif $token[i][0].chr == '-'
-          if $token[i][1] == nil
-            $syn[i] = $token[i][0] - 20
-          else
-            $syn[i] = 26
-          end
-        elsif $syn[i - 1] == 29
-          $syn[i] = 19
-        else
-          $syn[i] = 16
-        end
+    if keyword.include?($token[i])
+      $syn[i] = keyword.find_index($token[i])
+    else
+      if /^-?[1-9]\d*$/ =~ $token[i]
+        $syn[i] = 23
+      elsif /^-?[1-9]\d*\.\d*|0\.\d*[1-9]\d*$/ =~ $token[i]
+        $syn[i] = 24
+      elsif /^'\w+'$/ =~ $token[i]
+        $syn[i] = 25
+      elsif $token[i][0].chr == '#'
+        $syn[i] = 35
+      else 
+        $syn[i] = 22
       end
+    end
   }
   
   0.upto($token.length - 1) { |i|  
