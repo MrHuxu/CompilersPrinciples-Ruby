@@ -1,6 +1,6 @@
 load "declareID.rb"
 
-def StxAnalyzer()
+def Make_Stx_list()
   $Stx_list = [] 
   0.upto(500) { |i|  $Stx_list[i] = {
       'action' => [],
@@ -215,27 +215,37 @@ def StxAnalyzer()
   }
 
   0.upto($line.length-1) { |i|  $line[i].delete_at(2)}
-  $ex = ['i', '$']
+end
+
+def StxAnalyzer(m,n,o)
+  $ex = []+ m
   $stack[0] = 0
   $ip = 0
   while $ip < $ex.length 
     if $Stx_list[$stack[$stack.length-1]]['action'][$T.find_index($ex[$ip])] == nil
-      puts "Error!"
+      if o != nil
+        print "line",n,'-',o,": Error!", "\n"
+      else
+        print "line",n,": Error!", "\n"
+      end
       break
     elsif $Stx_list[$stack[$stack.length-1]]['action'][$T.find_index($ex[$ip])] == "acc"
-      puts "Victory!"
+      if o != nil
+        print "line",n,'-',o,": Accept!", "\n"
+      else
+        print "line",n,": Accept!", "\n"
+      end
       break
     elsif $Stx_list[$stack[$stack.length-1]]['action'][$T.find_index($ex[$ip])].split('')[0] == 's'
       $stack[$stack.length] = [$ex[$ip]]
       $stack[$stack.length] = Integer($Stx_list[$stack[$stack.length-2]]['action'][$T.find_index($ex[$ip])].split('')[1..($Stx_list[$stack[$stack.length-2]]['action'][$T.find_index($ex[$ip])].split('').length-1)].join(''))
-      print $stack, "\n"
       $ip += 1
     elsif $Stx_list[$stack[$stack.length-1]]['action'][$T.find_index($ex[$ip])].split('')[0] == 'r'
       rdct_tmp = Integer($Stx_list[$stack[$stack.length-1]]['action'][$T.find_index($ex[$ip])].split('')[1..($Stx_list[$stack[$stack.length-1]]['action'][$T.find_index($ex[$ip])].split('').length-1)].join(''))
       1.upto($line[rdct_tmp].length-2) { |i|  2.times {$stack.delete_at($stack.length-1)}}
       $stack[$stack.length] = $line[rdct_tmp][0]
       $stack[$stack.length] = $Stx_list[$stack[$stack.length-2]]['goto'][$V.find_index($line[rdct_tmp][0])]
-      print $stack, "\n"
     end
   end
+  $stack.clear
 end

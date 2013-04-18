@@ -57,7 +57,7 @@ def LexAnalyzer()
     if keyword.include?($token[i])
       $syn[i] = keyword.find_index($token[i])
     else
-      if /^-?[1-9]\d*$/ =~ $token[i]
+      if /^-?[0-9]\d*$/ =~ $token[i]
         $syn[i] = 23
       elsif /^-?[1-9]\d*\.\d*|0\.\d*[1-9]\d*$/ =~ $token[i]
         $syn[i] = 24
@@ -69,9 +69,5 @@ def LexAnalyzer()
         $syn[i] = 22
       end
     end
-  }
-  
-  0.upto($token.length - 1) { |i|  
-    print $getNumofLine[i], "    "  , $syn[i], "    "  ,  $token[i] , "\n" #打印行号，种别码，属性值
   }
 end

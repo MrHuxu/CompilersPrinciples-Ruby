@@ -4,9 +4,10 @@ int c
 a = 12
 a = 2.4
 c = gets
+a = a * (a + c)
 b = 'Ruby'
 
-if c > a :
+if c == a :
     puts c
 end
 
