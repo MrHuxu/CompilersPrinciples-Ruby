@@ -1,4 +1,4 @@
-load "declareID.rb"
+load "/home/huxu/workspace/CompilersPrinciples-Ruby/lib/declareID.rb"
 
 #根据CFG.txt制作语法分析表
 def Make_Stx_list()
@@ -9,7 +9,7 @@ def Make_Stx_list()
     }  
   }
   #打开并将CFG.txt内容分别存入相应数组
-  file = File.open("CFG.txt")
+  file = File.open("/home/huxu/workspace/CompilersPrinciples-Ruby/lib/CFG.txt")
   $a = 0
   file.each_line {|line|
     if $a == 0

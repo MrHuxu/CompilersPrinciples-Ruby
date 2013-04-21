@@ -3,6 +3,7 @@ int b
 int c
 a = 12
 a = 2.4
+a = a a
 #c = gets #haha
 a = a * (a + c)
 b = 'Ruby'

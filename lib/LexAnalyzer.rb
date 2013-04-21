@@ -1,4 +1,4 @@
-load "declareID.rb"
+load "/home/huxu/workspace/CompilersPrinciples-Ruby/lib/declareID.rb"
 
 def LexAnalyzer()
   keyword = %w{int real string if while end else gets puts + - * / = != == > < ( ) :}   #所有关键字的集合
@@ -6,7 +6,7 @@ def LexAnalyzer()
   
   #将文件内容逐行读入数组，get_line每行为字符串
   get_line = []
-  file = File.open("test.txt") 
+  file = File.open("/home/huxu/workspace/CompilersPrinciples-Ruby/lib/test.txt") 
   file.each  { |line|
     get_line[get_line.length] = line
   }

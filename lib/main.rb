@@ -1,8 +1,8 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
-load "LexAnalyzer.rb"
-load "StxAnalyzer.rb"
-load "declareID.rb"
+load "/home/huxu/workspace/CompilersPrinciples-Ruby/lib/LexAnalyzer.rb"
+load "/home/huxu/workspace/CompilersPrinciples-Ruby/lib/StxAnalyzer.rb"
+load "/home/huxu/workspace/CompilersPrinciples-Ruby/lib/declareID.rb"
 
 #输入文件路径，坑爹的gets方法，居然在最后有一个\n，注意第8行就是消除这个字符
 LexAnalyzer()
@@ -14,7 +14,7 @@ while j <= $sentence.length-1
   #行首为注释符，跳过此行不归约
   if $sentence[j] == '#'        
     j += 1
-  #行首为if或while，必须将这行直到end之间的内容放进tmp里进行归于
+  #行首为if或while，必须将这行直到end之间的内容放进tmp里进行归约
   elsif $sentence[j] == 'f' || $sentence[j] == 'e'        
     j.upto($sentence.length-1) { |i|  
       if $sentence[i] == 'd'
